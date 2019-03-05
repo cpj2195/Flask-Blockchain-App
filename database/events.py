@@ -1,9 +1,13 @@
-from . import db, BaseMixin
-from sqlalchemy.sql import func
-from sqlalchemy import event, inspect
-import enum, datetime
-from .api_tracker import ApiTracker
+import datetime
+import enum
+
 from common.logging_config import applogger
+from sqlalchemy import event, inspect
+from sqlalchemy.sql import func
+
+from . import BaseMixin, db
+from .api_tracker import ApiTracker
+
 
 class LoggerSourceEnum(enum.Enum):
     user              = "user"

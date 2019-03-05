@@ -1,6 +1,10 @@
-import pytz, datetime
+import datetime
+import random
+import string
+
+import pytz
 from flask import request
-import random, string
+
 
 def get_request_ip():
     if request.headers.getlist("X-Forwarded-For"): ip = request.headers.getlist("X-Forwarded-For")[0]

@@ -11,8 +11,6 @@ class ApiTrackerAPI(APIBase):
     '''API for working with Api tracker'''
     response_schema   = schemas.api_tracker.ApiSchema
     request_schema    = schemas.api_tracker.ApiSchema
-    api_permissions = [(['permission_browse_anonymously'], ['OPTIONS']),
-                       (['permission_get_apis'],    ['GET'])]
     api_rate_limit  = '1/second'
     api_url         = '/apis'
     api_endpoint    = 'apis'
@@ -26,8 +24,6 @@ class SingleApiTrackerAPI(APIBase):
 
     response_schema   = schemas.api_tracker.ApiSchema
     request_schema    = schemas.api_tracker.ApiSchema
-    api_permissions = [(['permission_browse_anonymously'], ['OPTIONS']),
-                       (['permission_get_apis'],    ['GET'])]
     api_rate_limit  = '1/second'
     api_url         = '/api/<int:api_id>'
     api_endpoint    = 'api'

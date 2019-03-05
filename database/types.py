@@ -1,13 +1,20 @@
 #Backend-agnostic GUID Type
 #http://docs.sqlalchemy.org/en/latest/core/custom_types.html#backend-agnostic-guid-type
 
-from sqlalchemy.types import TypeDecorator, CHAR, BigInteger, VARCHAR, UnicodeText
-from sqlalchemy.dialects import postgresql
-import uuid, IPy, json, six
+import json
+import uuid
 
+import six
+
+import IPy
+from sqlalchemy.dialects import postgresql
 #override compilation of BigInteger for sqlite to Integer
 #https://bitbucket.org/zzzeek/sqlalchemy/issues/2074/map-biginteger-type-to-integer-to-allow
 from sqlalchemy.ext.compiler import compiles
+from sqlalchemy.types import (CHAR, VARCHAR, BigInteger, TypeDecorator,
+                              UnicodeText)
+
+
 @compiles(BigInteger, 'sqlite')
 def bi_c(element, compiler, **kw):
     return "INTEGER"

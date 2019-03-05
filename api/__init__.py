@@ -90,7 +90,6 @@ class SQLAlchemyQuery(object):
         return query.all()
 
 class APIBase(MethodViewBase):
-    #shamelessly copied from https://py-jsonapi.readthedocs.io/en/latest/_modules/jsonapi/base/request.html#Request
     @property
     def input_filters(self):
         """:filtering:
@@ -155,7 +154,6 @@ class APIBase(MethodViewBase):
                     filters.append((field, filtername, value))
         return filters
 
-    #shamelessly copied from https://py-jsonapi.readthedocs.io/en/latest/_modules/jsonapi/base/request.html#Request
     @property
     def input_sorts(self):
         """:ordering:

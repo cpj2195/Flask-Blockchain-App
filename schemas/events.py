@@ -1,7 +1,8 @@
+from database import events as event_models
 from marshmallow import fields
 from marshmallow_enum import EnumField
-from database import events as event_models
 from schemas import ma
+
 
 class EventSchema(ma.ModelSchema):
     class Meta:

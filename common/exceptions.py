@@ -1,6 +1,7 @@
 #http://flask.pocoo.org/docs/0.12/patterns/apierrors/
 from flask import jsonify
 
+
 class HTTPError(Exception):
 
     def __init__(self, message, status_code, error_type, **kwargs):

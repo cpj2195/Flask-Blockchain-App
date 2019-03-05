@@ -1,4 +1,8 @@
-import os, regex, yaml
+import os
+
+import regex
+import yaml
+
 #{package_root}/common/configuration.py
 PACKAGE_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # print(PACKAGE_ROOT)

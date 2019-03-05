@@ -4,6 +4,7 @@ set and configure a common module logger
 import logging
 import logging.handlers
 import os
+
 from common import configuration
 
 log_folder = configuration.system['log_folder']

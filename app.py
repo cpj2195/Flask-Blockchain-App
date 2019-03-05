@@ -1,12 +1,11 @@
-from flask import Flask, request, g, jsonify, abort
+from common import configuration, logging_config
+from common.exceptions import (Forbidden, Unauthorized, raise_exception,
+                               register_error_handlers)
+from database import db, track_session_deletes
+from flask import Flask, abort, g, jsonify, request
 from flask_limiter import Limiter
 from flask_limiter.util import get_ipaddr
-from database import db, track_session_deletes
 from schemas import ma
-
-from common import configuration
-from common import logging_config
-from common.exceptions import Forbidden, Unauthorized,raise_exception, register_error_handlers
 
 rate_limiter = Limiter(key_func=get_ipaddr)
 
@@ -38,8 +37,6 @@ def init_app_plugins(app):
     return app
 
 def create_and_initialize_app(config_name):
-    print(config_name)
-    print(configuration.system)
     configuration.load_configuration(config_name)
     logging_config.configure_app_logger(configuration.system['debug'])
     app = create_app()

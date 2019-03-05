@@ -1,21 +1,22 @@
 #!/usr/bin/env python
+import datetime
 import os
+
+import app
+from common import configuration, exceptions, utils
+from common.logging_config import applogger
+from database import db
+from database.api_tracker import ApiTracker
+from database.events import Event, EventLevelEnum, LoggerSourceEnum
+from database.types import GUID, INET
+from flask import request
+from flask_migrate import Migrate, MigrateCommand
+from flask_script import Manager, Shell
+
 activate_this = './venv/bin/activate_this.py'
 activate_this = os.path.join(os.path.dirname(__file__), activate_this)
 execfile(activate_this, dict(__file__=activate_this))
 
-from flask import request
-import datetime
-from common import configuration
-from common import exceptions, utils
-from flask_script import Manager, Shell
-from flask_migrate import Migrate, MigrateCommand
-import app
-from database import db
-from database.events import Event, LoggerSourceEnum, EventLevelEnum
-from database.types import GUID, INET
-from database.api_tracker import ApiTracker
-from common.logging_config import applogger
 
 APP = app.create_and_initialize_app(os.getenv('FLASK_CONFIG') or 'default_config')
 MANAGER = Manager(APP)

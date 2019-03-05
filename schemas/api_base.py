@@ -1,5 +1,6 @@
 from schemas import ma
 
+
 class FieldSelectionSchema(ma.Schema):
     class Meta:
         fields = ('fields',)

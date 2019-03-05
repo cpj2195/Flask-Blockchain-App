@@ -1,12 +1,12 @@
-from . import db, BaseMixin
-from .types import GUID
-from sqlalchemy.orm import validates
-import database
-import enum
 import datetime
-from sqlalchemy_utils import URLType
-from sqlalchemy_utils import IPAddressType
+import enum
 
+import database
+from sqlalchemy.orm import validates
+from sqlalchemy_utils import IPAddressType, URLType
+
+from . import BaseMixin, db
+from .types import GUID
 
 
 class ApiTracker(db.Model):
@@ -22,7 +22,7 @@ class ApiTracker(db.Model):
     request_ip 			 = db.Column(db.String)
     platform             = db.Column(db.String)
     browser              = db.Column(db.String)
-    # version              = db.Column(db.String)
+    
     def __init__(self, URL,method,status,status_code,execution_time, request_ip,platform,browser):
         self.URL                = URL
         self.method             = method
@@ -32,4 +32,3 @@ class ApiTracker(db.Model):
         self.request_ip         = request_ip
         self.platform           = platform
         self.browser            = browser
-        # self.version            = version

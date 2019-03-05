@@ -1,0 +1,9 @@
+development_config: &development_config
+
+    bootstrap_users: &sample_users
+      - {uname: anonymous_user, pass: anon@wsx#edc}
+      - {uname: tuser1,         pass: tu@123#}
+      - {uname: tuser2,         pass: tu@456#}
+      - {uname: tadmin,         pass: ta@567#}
+   
+default_config: *development_config

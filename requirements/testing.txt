@@ -1,0 +1,8 @@
+coverage
+testtools
+testrepository
+mock
+sqlalchemy_utils
+flask_apscheduler
+wget
+ipaddr

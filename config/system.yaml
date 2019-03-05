@@ -1,0 +1,33 @@
+#app settings
+log_folder: &logf
+    /home/chander/elucidata
+app_name:   &appn
+    flask_app
+
+
+
+development_config: &development_config
+    log_folder: *logf
+    app_name:   *appn
+    database_type:  sqlite
+    database_name:  development
+    database_ip:    localhost
+    database_user:  cpj
+    database_old_data_expiry_age_days: &database_old_data_expiry_age_days
+                                       60
+    #broker configuration options
+    debug:          True
+    #flask options
+    flask_configuration:
+        RATELIMIT_HEADERS_ENABLED:      True
+        RATELIMIT_DEFAULT:              "10000/hour;1000/minute;100/second"
+        BUNDLE_ERRORS:                  True
+        SQLALCHEMY_TRACK_MODIFICATIONS: False
+        SECRET_KEY:                     "%{passwords['secret_key']}"
+        SQLALCHEMY_BINDS: {
+            'broker_db': &context_lock_db_development
+                         "%{'{dialect}:///{du}_broker_db.sqlite'.format(dialect=system['database_type'], du=system['database_user'])}",
+            'analytics_db': "%{'{dialect}:///{du}_analytics_db.sqlite'.format(dialect=system['database_type'], du=system['database_user'])}"
+        }   
+
+default_config: *development_config

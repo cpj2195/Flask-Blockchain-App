@@ -12,7 +12,6 @@ from database.types import GUID, INET
 from flask import request
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager, Shell
-
 activate_this = './venv/bin/activate_this.py'
 activate_this = os.path.join(os.path.dirname(__file__), activate_this)
 execfile(activate_this, dict(__file__=activate_this))
@@ -55,7 +54,6 @@ def per_request_callbacks(response):
     db.session.commit()
 
     return response
-
 
 if __name__ == "__main__":
 

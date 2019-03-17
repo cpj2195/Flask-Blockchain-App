@@ -1,6 +1,10 @@
 import datetime
 import hashlib
 import json
+import requests
+from uuid import uuid4
+from urlparse import urlparse
+
 
 class Block:
     def __init__(self,data):
@@ -12,7 +16,9 @@ class Block:
 class BlockChain:
     def __init__(self):
         self.head = None
+        self.transactions = []
         self.insertBlock(proof=1,prev_hash='0')
+        self.nodes = set()
     
 
     def insertBlock(self, prev_hash,proof):
@@ -24,7 +30,7 @@ class BlockChain:
             return
         
         else:
-            new_data = {"timestamp":str(datetime.datetime.now()),'proof': proof, "prev_hash":prev_hash}
+            new_data = {"timestamp":str(datetime.datetime.now()),'proof': proof, "prev_hash":prev_hash, "transactions":  self.transactions}
             new_block = Block(new_data)
             test_node = self.head
             if(self.head is None):
@@ -52,7 +58,28 @@ class BlockChain:
             new_block.next = self.head
             if self.head is not None: 
                 self.head.prev = new_block
+            
             self.head = new_block
+    
+    def insert_atend(self,new_data):
+        if(new_data.get('prev_hash') is None):
+            print("Your data does not have a previous Hash")
+            return
+        else:
+            new_block = Block(new_data)
+            if self.head is None:
+                self.head = new_block
+                new_block.next = None
+                new_block.prev = None
+                return
+            else:
+                test_node = self.head
+                while(test_node.next is not None):
+                    test_node = test_node.next
+                test_node.next = new_block
+                new_block.prev = test_node
+                new_block.next = None
+        
     
     def get_length(self):
         if self.head is None:
@@ -71,6 +98,7 @@ class BlockChain:
         else:
             test_node = self.head
             while(test_node is not None):
+                print(test_node.data)
                 test_node = test_node.next
     
     def get_last_block(self):
@@ -117,3 +145,35 @@ class BlockChain:
                     return False
                 previous_node = previous_node.next
             return True
+    
+    def add_transaction(self,sender,receiver,amount):
+        self.transactions.append({"sender":sender,"receiver":receiver,"amount":amount})
+        chain_length = self.get_length()
+        return chain_length +1
+    
+    def add_node(self,node_address):
+        parsed_url = urlparse(node_address)
+        self.nodes.add(parsed_url.netloc)
+    
+
+     
+    def replace_chain(self):
+        network = self.nodes
+        longest_chain = None
+        max_chain_length = self.get_length()
+        new_blockchain = BlockChain()
+        for node in network:
+            response = requests.get("http://{node}/get_chain".format(node))
+            if response.status_code == 200:
+                current_length = response.json().get("chain_length")
+                current_chain = response.json().get("chain")
+                if current_length > max_chain_length:
+                    max_chain_length  = current_length
+                    longest_chain = current_chain
+                    for block in longest_chain:
+                        new_blockchain.insert_atend(block)
+        if longest_chain is not None:
+            self.head = new_blockchain.head
+            return True
+        return False
+

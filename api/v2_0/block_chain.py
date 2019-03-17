@@ -3,7 +3,7 @@ import schemas
 from api import APIBase
 from common.logging_config import applogger
 from common import exceptions
-from . import blockchain_list
+from . import blockchain_list,node_address
 
 
 
@@ -20,6 +20,8 @@ class BlockChainAPI(APIBase):
         prev_proof = last_block.data.get("proof")
         new_proof = blockchain_list.proof_of_work(prev_proof)
         prev_hash = blockchain_list.hash_block(last_block)
+        new_block.add_transaction(node_address,"Chander PRabh", 100)
+
         new_block = blockchain_list.insertBlock(prev_hash,new_proof)
         return jsonify(new_block.data)
     
@@ -32,10 +34,15 @@ class FullBlockChainAPI(APIBase):
     api_endpoint    = 'get_chain'
 
     def get(self):
-        result = []
+        result = {}
         test_node = blockchain_list.head
+        chain = []
+        count = 0
         while(test_node is not None):
-            result.append(test_node.data)
-            test_node = test_node.next            
+            chain.append(test_node.data)
+            test_node = test_node.next
+            count = count +1     
+        result["chain"] = chain
+        result["chain_length"] = count   
         return jsonify(result)
       

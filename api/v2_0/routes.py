@@ -1,6 +1,7 @@
 from .events            import EventsAPI,      SingleEventAPI
 from .api_tracker       import ApiTrackerAPI,    SingleApiTrackerAPI
 from .block_chain import BlockChainAPI, FullBlockChainAPI
+from .transaction import TransactionAPI, AddNodeAPI, ReplaceChainAPI
 
 
 from . import api_bp
@@ -11,7 +12,7 @@ from schemas import ma
 from flask_limiter.util import get_remote_address
 
 
-api_mappers = [EventsAPI, SingleEventAPI, ApiTrackerAPI,SingleApiTrackerAPI,BlockChainAPI,FullBlockChainAPI]
+api_mappers = [EventsAPI, SingleEventAPI, ApiTrackerAPI,SingleApiTrackerAPI,BlockChainAPI,FullBlockChainAPI, TransactionAPI, AddNodeAPI, ReplaceChainAPI]
 
 class URLDiscoverySchema(ma.Schema):
     class Meta:
